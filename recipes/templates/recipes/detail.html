@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    {{ recipe_object.title }} -
+    Scrumptious Recipes
+{% endblock title%}
+
+{% block content %}
+    <header>
+        <nav>
+            <a href ="{% url 'recipe_list' %}">Main Page</a>
+            <a href ="{% url 'edit_recipe' recipe_object.id %}">Edit Recipe</a>
+        </nav>
+    </header>
+    <main>
+        <h1>{{ recipe_object.title }}</h1>
+        <img src="{{ recipe_object.picture }}"
+        alt="Six vegetarian tacos arranged on a plate
+            with limes and green onion" height="200">
+            <div>4.3 stars</div>
+            <p>{{ recipe_object.description }}</p>
+        <h2>Ingredients</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Food item</th>
+                </tr>
+                    <tbody>
+                        {% for ingredient in recipe_object.ingredients.all %}
+                            <tr>
+                                <td>{{ ingredient.amount }}</td>
+                                <td>{{ ingredient.food_item }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+            </thead>
+        </table>
+        <h2>Steps</h2>
+    <ol>
+        {% for step in recipe_object.steps.all %}
+            <li>{{ step.instruction }}</li>
+        {% endfor %}
+    </ol>
+</main>
+{% endblock content %}
